@@ -65,6 +65,7 @@ The unfortunate part is that software isn't that interchangeable by default. The
 
 - [riot](http://www.riot-os.org/) A Posix layer for a billion mcus with threds and IP and all that
 - [contiki](http://www.contiki-os.org/) More popular, less posixy
+- [chibios](http://www.chibios.org/) 'ReadError' says this is good. Likely true.
 - [libopencm3](http://libopencm3.org/)  A shit layer layer ontop of the more shitty STM chips
 - [freertos](http://www.freertos.org/) Some people use this, i dont know why.
 
