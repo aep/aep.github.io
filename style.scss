@@ -118,6 +118,8 @@ img {
 .date {
   font-style: italic;
   color: $gray;
+  margin-top:2em;
+  font-size:smaller;
 }
 
 // Specify the color of the selection
@@ -151,7 +153,7 @@ img {
 //
 
 .wrapper-masthead {
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 
 .masthead {
@@ -283,7 +285,29 @@ footer {
   text-align: center;
 }
 
+
+table {
+    border-collapse: collapse;
+}
+td,th
+{
+    border: 1px solid $lightGray;
+    padding:0.5em;
+    text-align:left;
+}
+
+th {
+    background-color:$lightGray;
+}
+
+
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
 @import "svg-icons";
+
+
+
+
+
+
