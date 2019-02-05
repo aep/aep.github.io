@@ -199,7 +199,7 @@ osaka!{
 
 ```
 
-but backpeddled because from a practical perspective, it makes more sense to remain somewhat compatible with tokio. The nest best abstraction layer that i would consider technically correct is [mio](https://github.com/carllerche/mio).
+but backpeddled because from a practical perspective, it makes more sense to remain somewhat compatible with tokio. The next best abstraction layer that i would consider technically correct is [mio](https://github.com/carllerche/mio).
 It is essentially a cross platform implementation of poll, very similar to the use case of libevent.
 
 So osaka is mostly a high level concept of using yield points to feed the mio polling machine. It is tied to mio with just a single type and can be ported to anything that has similar semantics (register to poller, poller sleeps and gives back activated events).
