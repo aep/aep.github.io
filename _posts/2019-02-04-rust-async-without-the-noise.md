@@ -6,6 +6,12 @@ title: osaka.rs - rust async without the noise
 This is a background story blog for [osaka.rs](https://github.com/aep/osaka) sort of.
 For a quicker intro of osaka, check out the [readme on github instead](https://github.com/aep/osaka).
 
+
+Content warning: Most critisicm of this post is that my tone isn't very professional and there's plenty typos in the post.
+If that's the sort of thing that is important to you, feel free to submit a correction to (https://github.com/aep/aep.github.io)[https://github.com/aep/aep.github.io].
+
+
+
 since the beginning of 2018 all of my companies/projects/lifes have switched over to rust as the one and
 only programming language. There are several reasons for it, but to recap here are the important ones:
 
