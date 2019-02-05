@@ -8,7 +8,7 @@ For a quicker intro of osaka, check out the [readme on github instead](https://g
 
 
 Content warning: Most critisicm of this post is that my tone isn't very professional and there's plenty typos in the post.
-If that's the sort of thing that is important to you, feel free to submit a correction to (https://github.com/aep/aep.github.io)[https://github.com/aep/aep.github.io].
+If that's the sort of thing that is important to you, feel free to submit a correction to [https://github.com/aep/aep.github.io](https://github.com/aep/aep.github.io)
 
 
 
