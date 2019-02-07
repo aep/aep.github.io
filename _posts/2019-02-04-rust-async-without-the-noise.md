@@ -271,3 +271,5 @@ Again, if you're building a webservice, chances are tokio is the better choice a
 
 Devguard has changed from tokio to osaka and lost a nice 60% binary size, and 80% memory usage while slashing tons of racing bugs and dangling resources, simply by making things simpler.
 As it is with most engineering, sometimes the simpler path is less glorious, but also more stable.
+
+[Discuss on HN](https://news.ycombinator.com/item?id=19104065)
