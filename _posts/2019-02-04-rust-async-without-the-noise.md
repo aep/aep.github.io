@@ -12,7 +12,7 @@ Those are not intentional, so feel free to submit a correction to [https://githu
 
 
 
-since the beginning of 2018 all of my companies/projects/lifes have switched over to rust as the one and
+Since the beginning of 2018 all of my companies/projects/lifes have switched over to rust as the one and
 only programming language. There are several reasons for it, but to recap here are the important ones:
 
  - hiring pool: rust has an incredibly talented and diverse community.
@@ -20,7 +20,7 @@ only programming language. There are several reasons for it, but to recap here a
  - ecosystem: crates.io is already amazing and ticks all the right boxes to grow to the size of gems or npm
 
 
-I have plenty of praise for rust. The fact alone that i am now committing my companies such as [devguard](https://devguard.io)
+I have plenty of praise for rust. The fact alone that I am now committing my companies such as [devguard](https://devguard.io)
 completely on rust should tell how serious i am.
 
 Unfortunately rust isn't focused on embedded exactly, so there's plenty workarounds that we've come up with over the course of shipping almost 30000 devices with an all-rust linux userspace. The biggest and most impactful is osaka, an alternative async system focused on readability and easy-to-argue code flow.
@@ -63,15 +63,15 @@ From a real life perspective (i.e. the reason you're reading this), futures.rs i
 
 ![](https://pbs.twimg.com/media/DlO8C3zXoAEWGWQ.jpg:large)
 
-Tokio additonally adds hefty memory requirements by being optimized for web servers. It's author is also a strong believer in edge triggered interrupts , although nobody else is. 
-It's alot harder to implement a race free edge triggered system and it makes zero performance difference with epoll anyway. If you're using tokio in high performance code, get used to 
+Tokio additonally adds hefty memory requirements by being optimized for web servers. Its author is also a strong believer in edge triggered interrupts , although nobody else is. 
+It's a lot harder to implement a race free edge triggered system and it makes zero performance difference with epoll anyway. If you're using tokio in high performance code, get used to 
 ```
 futures::task::current().notify()
 ```
 
-My second biggest complaint (after obesity) with futures/tokio however is that its incredible hard to argue about correctness.
-Where rust removes the massive burden of correctness checking for memory allocations, it adds more burden for external resources. Kind of the same mistake java made.
-The entire execution engine is hidden in a singleton, cynically probably to make it easier to argue, because thats how theoretical systems like haskell work.
+My second biggest complaint (after obesity) with futures/tokio however is that it's incredibly hard to argue about correctness.
+Where Rust removes the massive burden of correctness checking for memory allocations, it adds more burden for external resources. Kind of the same mistake Java made.
+The entire execution engine is hidden in a singleton, cynically probably to make it easier to argue, because that's how theoretical systems like haskell work.
 
 
 this is real code:
@@ -114,8 +114,8 @@ connect::connect(domain, secret.clone()).and_then(move |(ep, mut brk, sock, addr
     subscriber::connect(target, ep, &mut brk, sock, addr, secret).and_then(move |mut channel| {
 ```
 
-the whole argument that combinators are easier to read than callbacks already falls flat at step zero, because combinators are implemented as callbacks,
-which yes... they are hard to read because the argument types are implicit. who knows what ep is.
+The whole argument that combinators are easier to read than callbacks already falls flat at step zero, because combinators are implemented as callbacks,
+which yes... they are hard to read because the argument types are implicit. Who knows what ep is.
 
 
 ```rust
@@ -125,7 +125,7 @@ channel
     .into_future()
 ```
 
-an experienced tokio user will know that into_future hints that this thing is a stream. However, if you're new to tokio, this makes zero sense.
+An experienced tokio user will know that into_future hints that this thing is a stream. However, if you're new to tokio, this makes zero sense.
 There's no way to know what the return type of open is, and into_future() has no semantic meaning anyway. It's just boilerplate to put one combinator into another combinator,
 both of which are irrelevant for code flow.
 
@@ -136,7 +136,7 @@ both of which are irrelevant for code flow.
     drop(channel);
 ```
 
-this is the most bizzare and abusive part. it moves a resource into a closure that is held inside the tokio task queue until the previous future completed. This is nessesary because combinators completely break RAII.
+This is the most bizzare and abusive part. It moves a resource into a closure that is held inside the tokio task queue until the previous future completed. This is nessesary because combinators completely break RAII.
 If you don't do this, you'll get absurd race conditions and madening problems like stuck task queues when a resource is droped before its task completes.
 
 
@@ -155,7 +155,7 @@ println!("{}", b);
 ```
 
 or something. Nobody has agreed on the exact syntax yet, and the discussion is once again a bikeshedding monster trashfire. It won't matter much, as the underlying concept is both terrible and genious.
-The genious part is that it's atually just a generator, which is exactly how i implemented async in the clay programming language:
+The genious part is that it's atually just a generator, which is exactly how I implemented async in the clay programming language:
 
 ```C++
 async string something(Socket *socket) {
@@ -165,7 +165,7 @@ async string something(Socket *socket) {
 
 ```
 
-the rust equivalent would be slightly uglier, because generators can't have continuation arguments
+The Rust equivalent would be slightly uglier because generators can't have continuation arguments
 
 ```rust
 fn something(Socket socket) -> AsyncResult<String> {
@@ -179,15 +179,15 @@ fn something(Socket socket) -> AsyncResult<String> {
 
 ```
 
-but still alot better than what the futures.rs authors decided to do: [cram futures.rs into std](https://github.com/rust-lang/rfcs/pull/2418/files) and add an entire language feature to hide the bloat behind a code generator.
-A well constructed generator syntax is incredible generic and works with any async engine, however, rust has neither well constructed generators nor a generic execution engine. 
+It's still alot better than what the futures.rs authors decided to do: [cram futures.rs into std](https://github.com/rust-lang/rfcs/pull/2418/files) and add an entire language feature to hide the bloat behind a code generator.
+A well constructed generator syntax is incredible generic and works with any async engine, however, Rust has neither well constructed generators nor a generic execution engine. 
 
-It must standardize on future.rs because it makes sense from the perspective a web programming language like ruby to have a consistent ecosystem of async stuff that works well together. And rust clearly is intended for web and desktop apps rather than embedded devices.
+It must standardize on future.rs because it makes sense from the perspective a web programming language like Ruby to have a consistent ecosystem of async stuff that works well together. And Rust clearly is intended for web and desktop apps rather than embedded devices.
 
 osaka: tokio without the noise
 ----------------------------
 
-There where several dicussions how to implement an alternative async system outside of the tokio universe. I went as far as implementing golang coroutines
+There were several dicussions on how to implement an alternative async system outside of the tokio universe. I went as far as implementing golang coroutines
 
 ```rust
 osaka!{
@@ -199,7 +199,7 @@ osaka!{
 
 ```
 
-but backpeddled because from a practical perspective, it makes more sense to remain somewhat compatible with tokio. The next best abstraction layer that i would consider technically correct is [mio](https://github.com/carllerche/mio).
+but backpeddled because from a practical perspective, it makes more sense to remain somewhat compatible with tokio. The next best abstraction layer that I would consider technically correct is [mio](https://github.com/carllerche/mio).
 It is essentially a cross platform implementation of poll, very similar to the use case of libevent.
 
 So osaka is mostly a high level concept of using yield points to feed the mio polling machine. It is tied to mio with just a single type and can be ported to anything that has similar semantics (register to poller, poller sleeps and gives back activated events).
@@ -215,7 +215,7 @@ pub fn something(sock: Socket) -> Result<String> {
 }
 ```
 
-its in no way fancy, but has two significant advantages over async/await. Firstly, it emits a generator without a specific execution engine. the execution engine is passed as argument, if you need it.
+It's in no way fancy, but has two significant advantages over async/await. Firstly, it emits a generator without a specific execution engine. The execution engine is passed as argument, if you need it.
 Secondly, Result just works as intended. There's no need to wrap it in FutureResult because no such type exists. Whether your function returns Result or another type is up to you.
 Lastly, sync is just:
 
@@ -228,7 +228,7 @@ loop{
 }
 ```
 
-so anything that returns Ready/Again is sync. There is no task queue, no singleton, nothing 'magic'.
+So anything that returns Ready/Again is sync. There is no task queue, no singleton, nothing 'magic'.
 Here's some real life code:
 
 
@@ -255,19 +255,19 @@ pub fn main() {
 ```
 
 
-as you can see, in this case we're passing osaka::Poll as execution engine, which is essentially mio::Poll. 
-We're also explicitly implementing the code that checks for EAGAIN. osaka is much much less magic than tokio, 
-which also means there's some parts that require more explicit handling. osaka is intended for embedded, or other use cases where you already know how the underlying resources behave.
-While in theory this could be abstracted away better, i'm not sure if it should, since tokio already does a good job for those use cases.
+As you can see, in this case we're passing osaka::Poll as execution engine, which is essentially mio::Poll. 
+We're also explicitly implementing the code that checks for EAGAIN. Osaka is much much less magic than tokio, 
+which also means there are some parts that require more explicit handling. Osaka is intended for embedded, or other use cases where you already know how the underlying resources behave.
+While in theory this could be abstracted away better, I'm not sure if it should, since tokio already does a good job for those use cases.
 
 
-but what about the ecosystem
+But what about the ecosystem
 ----------------------------
 
-During a heated [twitter debate](https://twitter.com/arvidep/status/1090639300960665600), i made it quite clear that building a new async ecosystem for embedded is justified because the alternative is not using tokio. The alternative is nothing, since tokio does not and will never work on embedded.
+During a heated [twitter debate](https://twitter.com/arvidep/status/1090639300960665600), I made it quite clear that building a new async ecosystem for embedded is justified because the alternative is not using tokio. The alternative is nothing, since tokio does not and will never work on embedded.
 
 Building things with osaka is much quicker than with tokio, and there are only so many things that are actually needed. There's already a DNS resolver for example, and [devguard](https://devguard.io) brings an entire encrypted peer to peer message broker.
 Again, if you're building a webservice, chances are tokio is the better choice anyway.
 
-Devguard has changed from tokio to osaka and lost a nice 60% binary size, and 80% memory usage while slashing tons of racing bugs and dangling resources, simply by making things simpler.
+Devguard has changed from tokio to osaka and lost a nice 60% binary size, and 80% memory usage while slashing tons of racing bugs and dangling resources, just by making things simpler.
 As it is with most engineering, sometimes the simpler path is less glorious, but also more stable.
