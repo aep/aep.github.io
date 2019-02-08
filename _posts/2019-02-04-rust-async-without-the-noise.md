@@ -59,7 +59,7 @@ From a real life perspective (i.e. the reason you're reading this), futures.rs i
 ![](https://pbs.twimg.com/media/DlO8C3zXoAEWGWQ.jpg:large)
 
 Tokio additonally adds hefty memory requirements by being optimized for web servers. It's author is also a strong believer in edge triggered interrupts, although nobody else is.
-It's alot harder to implement a race free edge triggered system and it makes zero performance difference with epoll anyway. If you're using tokio in high performance code, get used to
+It's a lot harder to implement a race free edge triggered system and it makes zero performance difference with epoll anyway. If you're using tokio in high performance code, get used to
 ```rust
 futures::task::current().notify()
 ```
