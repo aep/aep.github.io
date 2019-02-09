@@ -7,8 +7,15 @@ This is a background story blog for [osaka.rs](https://github.com/aep/osaka) sor
 For a quicker intro of osaka, check out the [readme on github instead](https://github.com/aep/osaka).
 
 
-Since the beginning of 2018, all of my companies/projects/lives have switched over to rust as the one and
-only programming language. There are several reasons for it, but here are the important ones:
+
+Content warning: Most critisicm of this post is that my tone isn't very professional and there's plenty typos in the post.
+Those are not intentional, so feel free to submit a correction to [https://github.com/aep/aep.github.io](https://github.com/aep/aep.github.io)
+
+
+
+Since the beginning of 2018 all of my companies/projects/lifes have switched over to rust as the one and
+only programming language. There are several reasons for it, but to recap here are the important ones:
+
 
  - hiring pool: rust has an incredibly talented and diverse community.
  - just the right low levelism for embedded: rust has no GC or other runtime dependencies, but still adds high level concepts that reduce bugs.
@@ -17,6 +24,7 @@ only programming language. There are several reasons for it, but here are the im
 
 I have plenty of praise for rust. The fact alone that I am now committing my companies such as [devguard](https://devguard.io)
 completely to rust should tell you how serious I am.
+
 
 Unfortunately, rust isn't focused on embedded exactly, so there are plenty of workarounds that we've come up with over the course of shipping almost 30000 devices with an all-rust linux userspace. The biggest and most impactful is osaka, an alternative async system focused on readability and easy-to-argue code flow.
 
@@ -69,6 +77,7 @@ Where rust removes the massive burden of correctness checking for memory allocat
 The entire execution engine is hidden in a singleton, cynically probably to make it easier to argue, because thats how theoretical systems like haskell work.
 
 
+
 This is real code:
 
 ```rust
@@ -113,6 +122,7 @@ The whole argument that combinators are easier to read than callbacks already fa
 which yes... they are hard to read because the argument types are implicit. Who knows what `ep` is.
 
 
+
 ```rust
 channel
     .open(headers::Headers::with_path("/v0/self-update").and(":method".into(), "POST".into()))
@@ -137,6 +147,7 @@ If you don't do this, you'll get absurd race conditions and maddening problems l
 
 
 
+
 A promise of a greater future
 ----------------------------
 
@@ -152,6 +163,7 @@ println!("{}", b);
 or something. Nobody has agreed on the exact syntax yet, and the discussion has devolved into bikeshedding. It won't matter much, as the underlying concept is both terrible and genius.
 The genius part is that it's actually just a generator, which is exactly how I implemented async in the clay programming language:
 
+
 ```C++
 async string something(Socket *socket) {
     Packet packet = with socket.receive();
@@ -161,6 +173,7 @@ async string something(Socket *socket) {
 ```
 
 The rust equivalent would be slightly uglier, because generators can't have continuation arguments
+
 
 ```rust
 fn something(Socket socket) -> AsyncResult<String> {
@@ -179,10 +192,11 @@ A well constructed generator syntax is incredibly generic and works with any asy
 
 It must standardize on future.rs because it makes sense from the perspective of a web programming language like ruby to have a consistent ecosystem of async stuff that works well together. And rust clearly is intended for web and desktop apps rather than embedded devices.
 
+
 osaka: tokio without the noise
 ----------------------------
 
-There where several dicussions how to implement an alternative async system outside of the tokio universe. I went as far as implementing golang coroutines
+There were several dicussions on how to implement an alternative async system outside of the tokio universe. I went as far as implementing golang coroutines
 
 ```rust
 osaka!{
@@ -212,6 +226,7 @@ pub fn something(sock: Socket) -> Result<String> {
 
 It's in no way fancy, but has two significant advantages over async/await. Firstly, it emits a generator without a specific execution engine. The execution engine is passed as argument, if you need it.
 Secondly, `Result` just works as intended. There's no need to wrap it in `FutureResult` because no such type exists. Whether your function returns `Result` or another type is up to you.
+
 Lastly, sync is just:
 
 ```rust
@@ -223,7 +238,7 @@ loop{
 }
 ```
 
-so anything that returns Ready/Again is sync. There is no task queue, no singleton, nothing 'magic'.
+So anything that returns Ready/Again is sync. There is no task queue, no singleton, nothing 'magic'.
 Here's some real life code:
 
 
@@ -261,8 +276,10 @@ But what about the ecosystem?
 
 During a heated [twitter debate](https://twitter.com/arvidep/status/1090639300960665600), I made it quite clear that building a new async ecosystem for embedded is justified because the alternative is not "using tokio". The alternative is nothing, since tokio does not and will never work on embedded.
 
+
 Building things with osaka is much quicker than with tokio, and there are only so many things that are actually needed. There's already a DNS resolver for example, and [devguard](https://devguard.io) brings an entire encrypted peer to peer message broker.
 Again, if you're building a webservice, chances are tokio is the better choice anyway.
 
-Devguard has changed from tokio to osaka and lost a nice 60% binary size, and 80% memory usage while slashing tons of race conditions  and dangling resources, simply by making things simpler.
+Devguard has changed from tokio to osaka and lost a nice 60% binary size, and 80% memory usage while slashing tons of race conditions and dangling resources, simply by making things simpler.
+
 As it is with most engineering, sometimes the simpler path is less glorious, but also more stable.
